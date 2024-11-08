@@ -38,8 +38,8 @@ export function TopMenu() {
         </Link>
 
         <button
-          className="m-2 p-2 rounded-md transition-all  hover:bg-gray-100"
-          onClick={openSideMenu}  
+          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          onClick={openSideMenu} // Abrir el menú
         >Menú</button>
       </div>
     </nav>
