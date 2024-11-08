@@ -16,7 +16,7 @@ const productsInCart = [
   initialData.products[2],
 ]
 
-export default function ({ params }: Props) {
+export default function OrdersIdPage({ params }: Props) {
   const { id } = params
 
   // TODO: Verificar
