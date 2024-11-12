@@ -3,8 +3,8 @@ import { initialData } from "./seed"
 
 async function main() {
   // Borrar registros previos
-  await prisma.productImage.deleteMany(),
-  await prisma.product.deleteMany(),
+  await prisma.productImage.deleteMany()
+  await prisma.product.deleteMany()
   await prisma.category.deleteMany()
 
   const { categories, products } = initialData
@@ -30,7 +30,7 @@ async function main() {
     const dbProduct = await prisma.product.create({
       data: {
         ...rest,
-        categoryId: categoriesMap[type], // Ej: categoriesMap['shirts'] = '4c20b765-b49f-49f9-8778-1894d90a225f'
+        categoryId: categoriesMap[type] // Ej: categoriesMap['shirts'] = '4c20b765-b49f-49f9-8778-1894d90a225f'
       }
     })
 

@@ -1,10 +1,25 @@
-import { ProductGrid, Title } from "@/components"
-import { initialData } from "@/seed/seed"
+export const revalidate = 60 // false | 0 | number. 60 segundos
+import { redirect } from "next/navigation"
+import { getPaginatedProductsWithImages } from "@/actions"
+import { Pagination, ProductGrid, Title } from "@/components"
 
-// Seed temporal
-const products = initialData.products
+interface Props {
+  searchParams: {
+    page?: string 
+  }
+}
 
-export default function Home() {
+export default async function Home({searchParams}: Props) {
+  // Verificar si el parámetro URL 'page' existe
+  const page = searchParams.page ? parseInt(searchParams.page ) : 1
+
+  const { products, totalPages} = await getPaginatedProductsWithImages({ page })
+
+  // Verificar si no tenemos productos paginados
+  if(products.length === 0) {
+    redirect('/')
+  }
+
   return (
     <>
       <Title // Renderiza el componente
@@ -15,6 +30,10 @@ export default function Home() {
 
       <ProductGrid // Renderiza el componente
         products={products}
+      />
+
+      <Pagination // Renderiza el componente
+        totalPages={totalPages}
       />
     </>
   )
