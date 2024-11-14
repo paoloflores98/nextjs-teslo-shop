@@ -3,7 +3,7 @@ import { generatePaginationNumbers } from "@/utils"
 import Link from "next/link"
 import clsx from "clsx"
 import { redirect, usePathname, useSearchParams } from "next/navigation"
-import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5"
+import { FaAngleLeft, FaAngleRight, FaAnglesLeft, FaAnglesRight } from "react-icons/fa6"
 
 interface Props {
   totalPages: number
@@ -27,9 +27,10 @@ export const Pagination = ({ totalPages }: Props) => {
 
     if (pageNumber === "...") return `${pathname}?${params.toString()}`
     
-    if (+pageNumber <= 0) return `${pathname}` // Ej: /kid
-
-    if (+pageNumber > totalPages) return `${pathname}?${params.toString()}` // Cuando estás en la última página
+    // if(+pageNumber <= 0) return `${pathname}` // Ej: /kid
+    // if(+pageNumber > totalPages) return `${pathname}?${params.toString()}` // Ej: Cuando estás en la última página
+    
+    if(isNaN(+pageNumber) || +pageNumber < 1 || +pageNumber > totalPages) return `${pathname}?${params.toString()}` // Línea nueva
     
     params.set("page", pageNumber.toString())
     
@@ -39,22 +40,32 @@ export const Pagination = ({ totalPages }: Props) => {
   return (
     <div className="flex text-center justify-center mt-10 mb-32">
       <nav aria-label="Page navigation example">
-        <ul className="flex list-style-none">
+        <ul className="flex list-style-none items-center">
           <li className="page-item">
             <Link
-              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-              href={createPageUrl(+currentPage - 1)}
+              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href={createPageUrl(1)}
             >
-              <IoChevronBackOutline size={30} />
+              <FaAnglesLeft size={20} />
             </Link>
           </li>
 
-          {allPages.map((page) => (
-            <li key={page} className="page-item">
+          <li className="page-item">
+            <Link
+              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href={createPageUrl(+currentPage - 1)}
+            >
+              <FaAngleLeft size={20} />
+            </Link>
+          </li>
+
+          {allPages.map((page, index) => (
+            <li key={`${page}${index}`} className="page-item">
               <Link
                 className={clsx(
-                  "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
-                  {"bg-blue-600 shadow-sm text-white hover:text-white hover:bg-blue-700": page === currentPage}
+                  "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-gray-800 focus:shadow-none",
+                  {"bg-blue-600 hover:bg-blue-700 text-white hover:text-white shadow-sm": page === currentPage},
+                  {"hover:bg-gray-200": page !== currentPage}
                 )}
                 href={createPageUrl(page)}
               >
@@ -65,10 +76,19 @@ export const Pagination = ({ totalPages }: Props) => {
 
           <li className="page-item">
             <Link
-              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:bg-gray-200 focus:shadow-none"
               href={createPageUrl(+currentPage + 1)}
             >
-              <IoChevronForwardOutline size={30} />
+              <FaAngleRight size={20} />
+            </Link>
+          </li>
+
+          <li className="page-item">
+            <Link
+              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href={createPageUrl(totalPages)}
+            >
+              <FaAnglesRight size={20} />
             </Link>
           </li>
         </ul>

@@ -8,7 +8,7 @@ interface PaginationOptions {
   gender?: Gender
 }
 
-export const getPaginatedProductsWithImages = async ({page = 1, take = 12, gender}: PaginationOptions) => {
+export const getPaginatedProductsWithImages = async ({page = 1, take = 6, gender}: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1 // Verificar si el parámetro URL 'page' no existe
   if (page < 1) page = 1 // Verificar si la página es menor a uno
 

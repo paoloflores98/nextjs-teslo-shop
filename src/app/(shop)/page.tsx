@@ -13,7 +13,7 @@ export default async function Home({searchParams}: Props) {
   // Verificar si el parámetro URL 'page' existe
   const page = searchParams.page ? parseInt(searchParams.page ) : 1
 
-  const { products, totalPages} = await getPaginatedProductsWithImages({ page })
+  const { products, totalPages } = await getPaginatedProductsWithImages({ page })
 
   // Verificar si no tenemos productos paginados
   if(products.length === 0) {
