@@ -5,7 +5,7 @@ import { Pagination, ProductGrid, Title } from "@/components"
 
 interface Props {
   searchParams: {
-    page?: string 
+    page?: string
   }
 }
 

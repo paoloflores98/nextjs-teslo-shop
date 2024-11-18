@@ -20,7 +20,7 @@ export const generatePaginationNumbers = (currentPage: number, totalPages: numbe
   const halfVisible = Math.floor(visiblePages / 2)
 
   let startPage = Math.max(1, currentPage - halfVisible)
-  let endPage = Math.min(totalPages, startPage + visiblePages - 1)
+  const endPage = Math.min(totalPages, startPage + visiblePages - 1)
 
   if(endPage - startPage + 1 < visiblePages) {
     startPage = Math.max(1, endPage - visiblePages + 1)

@@ -20,7 +20,7 @@ export const OrderSummary = () => {
     if (itemsInCart === 0 && loaded === true) {
       router.replace('/empty')
     }
-  }, [itemsInCart, loaded])
+  }, [itemsInCart, loaded, router]) // Incluir router como dependencia
 
   if (!loaded) return <p>Cargando...</p>
 

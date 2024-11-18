@@ -11,7 +11,7 @@ export const getStockBySlug = async(slug: string): Promise<number> => {
 
     return stock?.inStock ?? 0 // Verificar si el producto está en stock
 
-  } catch (error) {
+  } catch {
     return 0
   }
 }

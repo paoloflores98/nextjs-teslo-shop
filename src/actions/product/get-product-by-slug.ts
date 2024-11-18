@@ -24,7 +24,7 @@ export const getProductBySlug = async (slug: string) => {
       images: product.ProductImage.map(image => image.url)
     }
 
-  } catch (error) {
+  } catch {
     throw new Error("Error al obtener producto por slug")
   }
 }

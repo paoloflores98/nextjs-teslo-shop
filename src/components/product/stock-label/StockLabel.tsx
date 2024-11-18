@@ -11,20 +11,29 @@ export const StockLabel = ({ slug }: Props) => {
   const [stock, setStock] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    getStock()
-  }, [])
+  // useEffect(() => {
+  //   getStock()
+  // }, [])
 
-  const getStock = async () => {
-    const inStock = await getStockBySlug(slug)
-    setStock(inStock)
-    setIsLoading(false)
-  }
+  // const getStock = async () => {
+  //   const inStock = await getStockBySlug(slug)
+  //   setStock(inStock)
+  //   setIsLoading(false)
+  // }
+
+  useEffect(() => {
+    const getStock = async () => {
+      const inStock = await getStockBySlug(slug)
+      setStock(inStock)
+      setIsLoading(false)
+    }
+    getStock()
+  }, [slug]) // Agrega slug como dependencia porque se usa en getStockBySlug
 
   return (
     <>
       {isLoading
-        ? (<h1 className={`${titleFont.className} antialiased font-bold text-lg bg-gray-200 animate-pulse rounded`}>&nbsp;</h1>) 
+        ? (<h1 className={`${titleFont.className} antialiased font-bold text-lg bg-gray-200 animate-pulse rounded`}>&nbsp;</h1>)
         : (<h1 className={`${titleFont.className} antialiased font-bold text-lg`}>Stock: {stock}</h1>)}
     </>
   )
