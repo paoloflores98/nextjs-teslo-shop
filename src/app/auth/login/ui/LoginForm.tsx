@@ -29,9 +29,7 @@ export const LoginForm = () => {
       <button
         className="btn-primary"
         type="submit"
-      >
-        Ingresar
-      </button>
+      >Ingresar</button>
 
       {/* Divisor line */}
       <div className="flex items-center my-5">
