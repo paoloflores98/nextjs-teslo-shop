@@ -5,21 +5,21 @@ import { authenticate } from "@/actions"
 import { IoInformationOutline } from "react-icons/io5"
 import clsx from "clsx"
 import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 export const LoginForm = () => {
-  const router = useRouter()
-
   // useFormState: Verificar el comportamiento del inicio de sesión
   const [state, dispatch] = useFormState(authenticate, undefined)
-  // console.log('En consola', { state })
+
+  const searchParams = useSearchParams()
+  const params = searchParams.get('origin')
 
   useEffect(() => {
     if (state === 'Success') {
-      // Redireccionar
-      router.replace('/')
+      if(!!params) return window.location.replace(params)
+      window.location.replace('/') // Redireccionar
     }
-  }, [state])
+  }, [state, params])
 
   return (
     <form className="flex flex-col" action={dispatch}>

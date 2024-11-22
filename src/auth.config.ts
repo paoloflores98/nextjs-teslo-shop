@@ -1,14 +1,59 @@
 import NextAuth, { type NextAuthConfig } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { z } from "zod"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import prisma from "./lib/prisma"
+import { User as PrismaUser } from "@prisma/client"
 
+// Rutas protegidas
+const authenticatedRoutes = [
+  "/auth/login",
+  "/auth/new-account"
+]
+
+const checkoutAddressRoute = [
+  "/checkout/address",
+]
 
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account'
+  },
+  callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user
+      const authRoutes = authenticatedRoutes.some(item => nextUrl.pathname.includes(item))
+      const checkoutRoutes = checkoutAddressRoute.some(item => nextUrl.pathname.includes(item))
+
+      if (authRoutes && isLoggedIn) {
+        return Response.redirect(new URL('/', nextUrl))
+      }
+
+      if (checkoutRoutes) {
+        if (isLoggedIn) return true
+
+        return Response.redirect(new URL(`/auth/login?origin=${nextUrl.pathname}`, nextUrl))
+      }
+
+      return true
+    },
+
+    jwt({ token, user }) {
+      if (user) {
+        // token.data = user
+        token.data = user as PrismaUser // Asegura el tipo correcto
+      }
+
+      return token
+    },
+
+    session({ session, token }) {
+      // session.user = token.data as any
+      session.user = token.data as PrismaUser
+
+      return session
+    },
   },
   providers: [
     Credentials({
@@ -21,12 +66,8 @@ export const authConfig: NextAuthConfig = {
         const validateCredentials = credentialsSchema.safeParse(credentials)
 
         // Verificar si el esquema no es correcto
-        // if (!validateCredentials.success) return null
         if (!validateCredentials.success) throw new Error('Datos no válidos introducidos')
-
         const { email, password } = validateCredentials.data
-
-        console.log('authConfig.ts', { email, password });
 
         // Buscar el correo
         const user = await prisma.user.findUnique({ where: { email } })
@@ -38,7 +79,6 @@ export const authConfig: NextAuthConfig = {
         // Retornar los campos del usuario excepto la contraseña
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password: _, ...rest } = user
-        console.log('auth.config.ts', rest)
 
         return rest
       },

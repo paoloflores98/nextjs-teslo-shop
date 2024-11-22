@@ -1,12 +1,8 @@
 "use server"
 import { signIn } from "@/auth.config"
 
-// ...
-
 export async function authenticate(prevState: string | undefined, formData: FormData) {
   try {
-    // console.log({formData: Object.fromEntries(formData)})
-    // await sleep(2)
     await signIn('credentials', { // Provider credentials
       ...Object.fromEntries(formData),
       redirect: false,
@@ -16,5 +12,20 @@ export async function authenticate(prevState: string | undefined, formData: Form
   } catch (error) {
     console.log(error)
     return 'CredentialsSignin'
+  }
+}
+
+export async function login(email: string, password: string) {
+  try {
+    await signIn('credentials', { email, password })
+
+    return { ok: true }
+
+  } catch (error) {
+    console.log(error)
+    return {
+      ok: false,
+      message: 'No se pudo iniciar sesión'
+    }
   }
 }
