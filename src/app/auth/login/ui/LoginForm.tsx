@@ -1,12 +1,25 @@
 "use client"
 import Link from "next/link"
-import { useFormState } from "react-dom"
+import { useFormState, useFormStatus } from "react-dom"
 import { authenticate } from "@/actions"
+import { IoInformationOutline } from "react-icons/io5"
+import clsx from "clsx"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 export const LoginForm = () => {
+  const router = useRouter()
+
   // useFormState: Verificar el comportamiento del inicio de sesión
   const [state, dispatch] = useFormState(authenticate, undefined)
-  console.log('En consola',{state})
+  // console.log('En consola', { state })
+
+  useEffect(() => {
+    if (state === 'Success') {
+      // Redireccionar
+      router.replace('/')
+    }
+  }, [state])
 
   return (
     <form className="flex flex-col" action={dispatch}>
@@ -26,10 +39,27 @@ export const LoginForm = () => {
         type="password"
       />
 
-      <button
+      {/* Verificar si las credenciales no son correctas */}
+      <div
+        className="flex h-8 items-end space-x-1"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {state === "CredentialsSignin" && (
+          <div className="flex flex-row mb-2">
+            <IoInformationOutline className="h-5 w-5 text-red-500" />
+            <p className="text-sm text-red-500">
+              Las credenciales no son correctas
+            </p>
+          </div>
+        )}
+      </div>
+
+      <LoginButton />
+      {/* <button
         className="btn-primary"
         type="submit"
-      >Ingresar</button>
+      >Ingresar</button> */}
 
       {/* Divisor line */}
       <div className="flex items-center my-5">
@@ -44,5 +74,22 @@ export const LoginForm = () => {
         Crear una nueva cuenta
       </Link>
     </form>
+  )
+}
+
+function LoginButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      className={clsx({
+        "btn-primary": !pending,
+        "btn-disabled": pending
+      })}
+      type="submit"
+      disabled={pending}
+    >
+      Ingresar
+    </button>
   )
 }

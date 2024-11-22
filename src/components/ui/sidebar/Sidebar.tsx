@@ -1,13 +1,17 @@
 "use client"
 import Link from "next/link"
 import clsx from "clsx"
+import { useSession } from "next-auth/react"
 import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoSearchOutline, IoShirtOutline, IoTicketOutline } from "react-icons/io5"
 import { useUIStore } from "@/store"
+import { logout } from "@/actions"
 
 // Instalar la dependencia clsx: npm install clsx
 
 export const Sidebar = () => {
   const { isSideMenuOpen, closeSideMenu } = useUIStore()
+  const { data: session } = useSession()
+  console.log(session)
 
   return (
     <div>
@@ -59,7 +63,8 @@ export const Sidebar = () => {
         {/* Menú */}
         <Link
           className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-          href="/"
+          href="/profile"
+          onClick={closeSideMenu}
         >
           <IoPersonOutline size={30} />
           <span className="ml-3 text-xl">Perfil</span>
@@ -75,19 +80,23 @@ export const Sidebar = () => {
 
         <Link
           className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-          href="/"
+          href="/auth/login"
+          onClick={() => closeSideMenu()}
         >
           <IoLogInOutline size={30} />
           <span className="ml-3 text-xl">Ingresar</span>
         </Link>
 
-        <Link
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-          href="/"
+        <button
+          className="flex w-full items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => {
+            logout() // Cerrar sesión desde el server action
+            closeSideMenu()
+          }}
         >
           <IoLogOutOutline size={30} />
           <span className="ml-3 text-xl">Salir</span>
-        </Link>
+        </button>
 
         {/* Line Separator */}
         <div className="w-full h-px bg-gray-200 my-10" />

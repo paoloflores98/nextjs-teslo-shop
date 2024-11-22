@@ -30,11 +30,9 @@ export const authConfig: NextAuthConfig = {
 
         // Buscar el correo
         const user = await prisma.user.findUnique({ where: { email } })
-        // if (!user) return null // Verificar si no existe el correo
         if (!user) throw new Error('Correo no encontrado') // Verificar si no existe el correo
 
         // Comparar las contraseñas
-        // if (!bcrypt.compareSync(password, user.password)) return null // Validar la contraseña ingresada con la contraseña en la DB
         if (!bcrypt.compareSync(password, user.password)) throw new Error('Contraseña incorrecta') // Validar la contraseña ingresada con la contraseña en la DB
 
         // Retornar los campos del usuario excepto la contraseña
@@ -48,4 +46,4 @@ export const authConfig: NextAuthConfig = {
   ]
 }
 
-export const { signIn, signOut, auth } = NextAuth(authConfig)
+export const { signIn, signOut, auth, handlers } = NextAuth(authConfig)

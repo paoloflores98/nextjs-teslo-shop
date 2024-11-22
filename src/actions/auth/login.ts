@@ -5,14 +5,16 @@ import { signIn } from "@/auth.config"
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
   try {
-    console.log({formData: Object.fromEntries(formData)})
-    await signIn('credentials', Object.fromEntries(formData)) // Provider credentials
-  } catch {
-    // if ((error as Error).message.includes('CredentialsSignin')) {
-    // }
+    // console.log({formData: Object.fromEntries(formData)})
+    // await sleep(2)
+    await signIn('credentials', { // Provider credentials
+      ...Object.fromEntries(formData),
+      redirect: false,
+    })
 
+    return 'Success'
+  } catch (error) {
+    console.log(error)
     return 'CredentialsSignin'
-    
-    // throw error
   }
 }
