@@ -6,35 +6,37 @@ import prisma from "./lib/prisma"
 import { User as PrismaUser } from "@prisma/client"
 
 // Rutas protegidas
-const authenticatedRoutes = [
-  "/auth/login",
-  "/auth/new-account"
-]
+// const authenticatedRoutes = [
+//   "/auth/login",
+//   "/auth/new-account"
+// ]
 
-const checkoutAddressRoute = [
-  "/checkout/address",
-]
+// const checkoutAddressRoute = [
+//   "/checkout/address",
+// ]
 
 export const authConfig: NextAuthConfig = {
+  trustHost: true,  // Asegura que NextAuth confíe en el host durante el build
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account'
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const authRoutes = authenticatedRoutes.some(item => nextUrl.pathname.includes(item))
-      const checkoutRoutes = checkoutAddressRoute.some(item => nextUrl.pathname.includes(item))
+    // authorized({ auth, request: { nextUrl } }) {
+    authorized() {
+      // const isLoggedIn = !!auth?.user
+      // const authRoutes = authenticatedRoutes.some(item => nextUrl.pathname.includes(item))
+      // const checkoutRoutes = checkoutAddressRoute.some(item => nextUrl.pathname.includes(item))
 
-      if (authRoutes && isLoggedIn) {
-        return Response.redirect(new URL('/', nextUrl))
-      }
+      // if (authRoutes && isLoggedIn) {
+      //   return Response.redirect(new URL('/', nextUrl))
+      // }
 
-      if (checkoutRoutes) {
-        if (isLoggedIn) return true
+      // if (checkoutRoutes) {
+      //   if (isLoggedIn) return true
 
-        return Response.redirect(new URL(`/auth/login?origin=${nextUrl.pathname}`, nextUrl))
-      }
+      //   return Response.redirect(new URL(`/auth/login?origin=${nextUrl.pathname}`, nextUrl))
+      // }
 
       return true
     },
@@ -70,7 +72,7 @@ export const authConfig: NextAuthConfig = {
         const { email, password } = validateCredentials.data
 
         // Buscar el correo
-        const user = await prisma.user.findUnique({ where: { email } })
+        const user = await prisma.user.findUnique({ where: { email } }) // Esto debió estar en la carpeta actions
         if (!user) throw new Error('Correo no encontrado') // Verificar si no existe el correo
 
         // Comparar las contraseñas

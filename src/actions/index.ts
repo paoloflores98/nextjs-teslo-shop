@@ -1,15 +1,20 @@
 // export * from "./product/get-product-by-slug"
 // export * from "./product/get-stock-by-slug"
 // export * from "./product/product-pagination"
+export { setUserAddress, createOrReplaceAddress } from "./address/set-user-address"
+export { getUserAddress } from "./address/get-user-address"
+export { deleteUserAddress } from "./address/delete-user-address"
 
 export { login, authenticate } from "./auth/login"
 export { logout } from "./auth/logout"
-export * from "./auth/register"
+export { registerUser } from "./auth/register"
+
+export { getCountries } from "./country/get-countries"
 
 // Importaciones específicas
-import { getPaginatedProductsWithImages } from "./product/product-pagination"
-import { getProductBySlug } from "./product/get-product-by-slug"
-import { getStockBySlug } from "./product/get-stock-by-slug"
+export { getProductBySlug } from "./product/get-product-by-slug"
+export { getStockBySlug } from "./product/get-stock-by-slug"
+export { getPaginatedProductsWithImages } from "./product/product-pagination"
 
 // Exportaciones específicas
-export { getPaginatedProductsWithImages, getProductBySlug, getStockBySlug }
+// export { getPaginatedProductsWithImages, getProductBySlug, getStockBySlug }
