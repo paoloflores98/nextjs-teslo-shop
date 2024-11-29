@@ -16,7 +16,6 @@ export function TopMenu() {
     setLoaded(true)
   }, [])
   
-
   return (
     <nav className="flex px-5 justify-between items-center w-full">
       {/* Logo */}

@@ -11,6 +11,10 @@ export { registerUser } from "./auth/register"
 
 export { getCountries } from "./country/get-countries"
 
+export { placeOrder } from "./order/place-order"
+export { getOrderById } from "./order/get-order-by-id"
+export { getOrdersByUser } from "./order/get-orders-by-user"
+
 // Importaciones específicas
 export { getProductBySlug } from "./product/get-product-by-slug"
 export { getStockBySlug } from "./product/get-stock-by-slug"

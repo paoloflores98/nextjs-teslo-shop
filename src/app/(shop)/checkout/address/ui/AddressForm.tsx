@@ -51,9 +51,8 @@ export const AddressForm = ({ countries, userStoredAddress }: Props) => {
   }, [address, reset])
 
   const onSubmit = async (data: FormInputs) => { // Ejecutar función después de validar los campos al enviar
-    setAddress(data) // Actualizar la dirección de entrega
-
     const { rememberAddress, ...restAddress } = data
+    setAddress(restAddress) // Actualizar la dirección de entrega
 
     if (rememberAddress) {
       await setUserAddress(restAddress, session!.user.id)

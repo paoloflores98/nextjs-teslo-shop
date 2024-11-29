@@ -8,6 +8,7 @@
 4. Levantar la base de datos ```docker compose up -d``` (Tener instalado Docker)
 5. Correr las migraciones de Prisma ```npx prisma migrate dev```
 6. Ejecutar el seed ```npm run seed``` o ```node --run seed``` para node.js ^22
-6. Correr el proyecto ```npm run dev``` o ```node --run dev``` para node.js ^22
+7. Limpiar el localStorage del navegador
+8. Correr el proyecto ```npm run dev``` o ```node --run dev``` para node.js ^22
 
 ## Correr en producción
