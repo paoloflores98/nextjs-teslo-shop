@@ -108,20 +108,21 @@ model UserAddress {
 
 // Orden de compras
 model Order {
-  id           String        @id @default(uuid())
-  subTotal     Float
-  tax          Float
-  total        Float
-  itemsInOrder Int
-  isPaid       Boolean       @default(false)
-  paidAt       DateTime?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String        @id @default(uuid())
+  subTotal      Float
+  tax           Float
+  total         Float
+  itemsInOrder  Int
+  isPaid        Boolean       @default(false)
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   // Relaciones
-  userId       String
-  user         User          @relation(fields: [userId], references: [id])
-  OrderItem    OrderItem[]
-  OrderAddress OrderAddress?
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  OrderItem     OrderItem[]
+  OrderAddress  OrderAddress?
+  transactionId String?
 }
 
 model OrderItem {
