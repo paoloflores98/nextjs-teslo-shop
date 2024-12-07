@@ -13,8 +13,9 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
     }
   }
 
-  const resp = await verifyPayPalPayment(paypalTransactionId, authToken) // Verifiar el pago
+  const resp = await verifyPayPalPayment(paypalTransactionId, authToken)
 
+  // Verificar si el pago no se completó
   if (!resp) {
     return {
       ok: false,
@@ -49,8 +50,7 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
       ok: true
     }
 
-  } catch (error) {
-    console.log(error)
+  } catch {
     return {
       ok: false,
       message: '500 - El pago no se pudo realizar'
@@ -63,6 +63,7 @@ export const getPayPalBearerToken = async (): Promise<string | null> => {
   const PAYPAL_SECRET = process.env.PAYPAL_SECRET
   const oauth2Url = process.env.PAYPAL_OAUTH_URL ?? ""
 
+  
   // Convertir el token a base 64
   const base64Token = Buffer.from(
     `${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`,
@@ -88,13 +89,10 @@ export const getPayPalBearerToken = async (): Promise<string | null> => {
     const result = await fetch(oauth2Url, {
       ...requestOptions,
       cache: 'no-cache'
-    })
-      .then(response => response.json())
-
+    }).then(response => response.json())
+    
     return result.access_token
-  } catch (error) {
-    console.log(error)
-
+  } catch {
     return null
   }
 }
@@ -102,6 +100,7 @@ export const getPayPalBearerToken = async (): Promise<string | null> => {
 export const verifyPayPalPayment = async (paypalTransactionId: string, bearerToken: string): Promise<PayPalOrderStatusResponse | null> => {
   const paypalOrderUrl = `${process.env.PAYPAL_ORDERS_URL}/${paypalTransactionId}`
 
+  /* Inicio - Generado por Postman */
   const myHeaders = new Headers()
   myHeaders.append(
     "Authorization",
@@ -112,17 +111,16 @@ export const verifyPayPalPayment = async (paypalTransactionId: string, bearerTok
     method: "GET",
     headers: myHeaders,
   }
+  /* Fin - Generado por Postman */
 
   try {
     const resp = await fetch(paypalOrderUrl, {
       ...requestOptions,
       cache: 'no-cache'
-    })
-      .then(response => response.json())
+    }).then(response => response.json())
 
     return resp
-  } catch (error) {
-    console.log(error)
+  } catch {
     return null
   }
 }

@@ -11,6 +11,7 @@ export const getOrderById = async (id: string) => {
       message: 'Debe de estar autenticado'
     }
   }
+  
   try {
     const order = await prisma.order.findUnique({
       where: { id },

@@ -1,4 +1,4 @@
-import {Montserrat_Alternates} from "next/font/google"
+import { Montserrat_Alternates } from "next/font/google"
 import localFont from "next/font/local"
 
 export const geistSans = localFont({

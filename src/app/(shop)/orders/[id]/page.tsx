@@ -93,7 +93,7 @@ export default async function OrdersIdPage({ params }: Props) {
               <div className="mt-5 mb-2 w-full">
                 {order?.isPaid
                   ? (
-                    <OrderStatus isPaid={order!.isPaid ?? false} />
+                    <OrderStatus isPaid={order?.isPaid ?? false} /> // Renderiza el componente
                   )
                   : (
                     <PayPalButton // Renderiza el componente

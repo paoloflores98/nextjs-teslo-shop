@@ -1,6 +1,5 @@
 "use client"
 import { useState } from 'react'
-import Image from 'next/image'
 import { Swiper as SwiperObject } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
@@ -9,7 +8,8 @@ import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
-import './slideshow.css' // Estilos propios del curso
+import './slideshow.css'; // Estilos propios del curso
+import { ProductImage } from '../product-image/ProductImage'
 
 interface Props {
   images: string[]
@@ -39,9 +39,9 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
       >
         {images.map(image => (
           <SwiperSlide key={image}>
-            <Image
+            <ProductImage
               className="rounded-lg object-fill"
-              src={`/products/${image}`}
+              src={image}
               width={1024}
               height={800}
               alt={title}
@@ -62,9 +62,9 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
       >
         {images.map(image => (
           <SwiperSlide key={image}>
-            <Image
+            <ProductImage
               className="rounded-lg object-fill"
-              src={`/products/${image}`}
+              src={image}
               width={300}
               height={300}
               alt={title}

@@ -14,6 +14,7 @@
     "@prisma/client": "^5.22.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "install": "^0.13.0",
     "next": "14.2.17",
