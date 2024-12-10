@@ -27,6 +27,7 @@ export const StockLabel = ({ slug }: Props) => {
       setStock(inStock)
       setIsLoading(false)
     }
+    
     getStock()
   }, [slug]) // Agrega slug como dependencia porque se usa en getStockBySlug
 
