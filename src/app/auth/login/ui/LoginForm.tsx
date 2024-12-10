@@ -29,6 +29,7 @@ export const LoginForm = () => {
         id="email"
         name="email"
         type="email"
+        placeholder="paolo@gmail.com"
       />
 
       <label htmlFor="password">Contraseña</label>
@@ -37,6 +38,7 @@ export const LoginForm = () => {
         id="password"
         name="password"
         type="password"
+        placeholder="1234"
       />
 
       {/* Verificar si las credenciales no son correctas */}
